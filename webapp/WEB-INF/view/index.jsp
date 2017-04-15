@@ -18,15 +18,15 @@
             }
 
             function writeMessage(message) {
-                $('#message0utput').append(message + '\n')
+                $('#messageOutput').append(message + '\n')
             }
 
             $('#connect').click(function doConnect() {
                 websocket = new WebSocket($("#target").val());
                 websocket.onopen = function (evt) {
                     writeStatus("CONNECTED");
-                    var ping = setinterval(function () {
-                        if (websocket != "undefined") websocket.send("ping");
+                    var ping = setInterval(function () {
+                        if (typeof websocket != 'undefined') websocket.send("ping");
                     }, 3000);
                 };
                 websocket.onclose = function (evt) {
@@ -41,7 +41,7 @@
                 };
             });
             $('#disconnect').click(function () {
-                if (typeof  websocket != 'undefined') {
+                if (typeof websocket != 'undefined') {
                     websocket.close();
                     websocket = undefined;
                 } else alert("Not  connected.");
@@ -56,7 +56,7 @@
 <body>
 <h2>WebSocket Tester</h2>
 Target:
-<input type="text" id="target" size="40" value="ws://localhost:8080/websocket-api/echoHandler"/>
+<input type="text" id="target" size="40" value="ws://localhost:8080/echoHandler"/>
 <br/>
 <button id="connect">Connect</button>
 <button id="disconnect">Disconnect</button>
